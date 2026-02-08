@@ -1,0 +1,70 @@
+/* ---------- Global ---------- */
+body {
+  margin: 0;
+  background-color: #f8f9fa;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI',
+    Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+/* ---------- Layout ---------- */
+.page-container {
+  margin-top: 2rem;
+  max-width: 1100px;
+}
+
+/* ---------- Home ---------- */
+.home {
+  text-align: center;
+  margin-top: 4rem;
+}
+
+/* ---------- Product Grid ---------- */
+.product-card {
+  height: 100%;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.product-image {
+  height: 200px;
+  object-fit: contain;
+  padding: 1rem;
+  background: white;
+}
+
+.product-title {
+  font-size: 0.95rem;
+}
+
+.product-price {
+  font-weight: bold;
+  margin-bottom: 0.75rem;
+}
+
+/* ---------- Product Details ---------- */
+.product-details {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  gap: 2rem;
+  align-items: start;
+}
+
+.product-details img {
+  width: 100%;
+  background: white;
+  padding: 1rem;
+  border-radius: 8px;
+}
+
+/* ---------- Forms ---------- */
+.form-page {
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+/* ---------- Loading ---------- */
+.loading {
+  display: flex;
+  justify-content: center;
+  margin-top: 4rem;
+}
