@@ -1,7 +1,7 @@
 {
   "rewrites": [
     {
-      "source": "/(.*)",
+      "source": "/((?!debug\\.html$).*)",
       "destination": "/index.html"
     }
   ]
