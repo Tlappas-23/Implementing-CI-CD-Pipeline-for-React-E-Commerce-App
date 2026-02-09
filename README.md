@@ -3,7 +3,7 @@
 React e‑commerce app with Firebase Authentication and Firestore for product and order management.
 
 ## Live Demo
-- https://YOUR-VERCEL-URL.vercel.app
+- https://implementing-ci-cd-pipeline-for-rea-kappa.vercel.app
 
 ## Features
 - Email/password registration, login, logout
