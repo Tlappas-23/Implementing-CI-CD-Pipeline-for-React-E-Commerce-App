@@ -3,7 +3,7 @@
 React e‑commerce app with Firebase Authentication and Firestore for product and order management.
 
 ## Live Demo
-- https://fakestore-865pgtywf-tommys-projects-678b576d.vercel.app
+- https://fakestore-gvyu3jrn3-tommys-projects-678b576d.vercel.app
 
 ## Features
 - Email/password registration, login, logout
