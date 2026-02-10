@@ -19,37 +19,26 @@ export function AuthProvider({ children }) {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    console.log('🔥 AuthContext: Setting up Firebase Auth listener...')
-
+    // Listen for authentication state changes (login/logout)
+    // This fires whenever a user logs in, logs out, or on page load
     const unsubscribe = onAuthStateChanged(auth, (user) => {
-      console.log('🔥 AuthContext: Auth state changed:', user ? 'User logged in' : 'No user')
       setCurrentUser(user)
-      setLoading(false)
-    }, (error) => {
-      console.error('🔥 AuthContext: Auth error:', error)
       setLoading(false)
     })
 
-    // Fallback timeout in case listener never fires
-    const timeout = setTimeout(() => {
-      console.warn('⚠️ AuthContext: Auth listener timeout after 5s, forcing loading=false')
-      setLoading(false)
-    }, 5000)
-
-    return () => {
-      clearTimeout(timeout)
-      unsubscribe()
-    }
+    // Cleanup function - unsubscribe from auth listener when component unmounts
+    return unsubscribe
   }, [])
 
   const register = async ({ email, password, name, address }) => {
-    // I create the auth user first, then save profile data in Firestore.
+    // Step 1: Create authentication account in Firebase Auth
     const credentials = await createUserWithEmailAndPassword(
       auth,
       email,
       password
     )
 
+    // Step 2: Save additional user profile data (name, address) to Firestore
     await createUserDoc({
       uid: credentials.user.uid,
       email: credentials.user.email,
@@ -66,11 +55,13 @@ export function AuthProvider({ children }) {
   const logout = () => signOut(auth)
 
   const removeAccount = async () => {
-    // I delete the Firestore doc before auth deletion to keep rules simple.
-    // If auth deletion fails with "requires-recent-login", log out/in then retry.
     if (!auth.currentUser) return
 
+    // Step 1: Delete user profile data from Firestore
     await deleteUserDoc(auth.currentUser.uid)
+
+    // Step 2: Delete authentication account from Firebase Auth
+    // Note: May require recent login for security
     await deleteUser(auth.currentUser)
   }
 

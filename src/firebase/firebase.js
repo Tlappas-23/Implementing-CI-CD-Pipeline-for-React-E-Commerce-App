@@ -1,11 +1,12 @@
-// Firebase setup
-// I keep my Firebase keys in .env so I don't hardcode secrets in Git.
+// Firebase Configuration
+// These environment variables are loaded from .env (local) or Vercel (production)
 import { initializeApp } from 'firebase/app'
 import { getAuth } from 'firebase/auth'
 import { getFirestore } from 'firebase/firestore'
 
+// Firebase project configuration
+// Values come from environment variables set in .env and Vercel dashboard
 const firebaseConfig = {
-  // These values come from the Firebase console.
   apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
   authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
   projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
@@ -14,18 +15,11 @@ const firebaseConfig = {
   appId: import.meta.env.VITE_FIREBASE_APP_ID
 }
 
-console.log('🔥 Firebase Config:', {
-  apiKey: firebaseConfig.apiKey ? '✅ Set' : '❌ Missing',
-  authDomain: firebaseConfig.authDomain ? '✅ Set' : '❌ Missing',
-  projectId: firebaseConfig.projectId ? '✅ Set' : '❌ Missing',
-  storageBucket: firebaseConfig.storageBucket ? '✅ Set' : '❌ Missing',
-  messagingSenderId: firebaseConfig.messagingSenderId ? '✅ Set' : '❌ Missing',
-  appId: firebaseConfig.appId ? '✅ Set' : '❌ Missing'
-})
-
+// Initialize Firebase app with our configuration
 const app = initializeApp(firebaseConfig)
-console.log('🔥 Firebase app initialized')
 
-// Export auth + db so the rest of the app can use them.
+// Export Firebase Authentication service for login/register features
 export const auth = getAuth(app)
+
+// Export Firestore Database service for storing products, orders, and user data
 export const db = getFirestore(app)
