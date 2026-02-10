@@ -19,12 +19,27 @@ export function AuthProvider({ children }) {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
+    console.log('🔥 AuthContext: Setting up Firebase Auth listener...')
+
     const unsubscribe = onAuthStateChanged(auth, (user) => {
+      console.log('🔥 AuthContext: Auth state changed:', user ? 'User logged in' : 'No user')
       setCurrentUser(user)
+      setLoading(false)
+    }, (error) => {
+      console.error('🔥 AuthContext: Auth error:', error)
       setLoading(false)
     })
 
-    return unsubscribe
+    // Fallback timeout in case listener never fires
+    const timeout = setTimeout(() => {
+      console.warn('⚠️ AuthContext: Auth listener timeout after 5s, forcing loading=false')
+      setLoading(false)
+    }, 5000)
+
+    return () => {
+      clearTimeout(timeout)
+      unsubscribe()
+    }
   }, [])
 
   const register = async ({ email, password, name, address }) => {

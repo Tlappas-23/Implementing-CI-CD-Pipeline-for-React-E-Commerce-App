@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Test Firebase Config</title>
+</head>
+<body>
+  <h1>Testing Firebase Configuration</h1>
+  <div id="status">Loading...</div>
+
+  <script type="module">
+    // Simulate what Vite does with env vars
+    const config = {
+      apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+      authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+      projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+      storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+      messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+      appId: import.meta.env.VITE_FIREBASE_APP_ID
+    };
+
+    document.getElementById('status').innerHTML = `
+      <h2>Environment Variables:</h2>
+      <pre>${JSON.stringify(config, null, 2)}</pre>
+      <p>All undefined? = ${Object.values(config).every(v => v === undefined)}</p>
+    `;
+  </script>
+</body>
+</html>
