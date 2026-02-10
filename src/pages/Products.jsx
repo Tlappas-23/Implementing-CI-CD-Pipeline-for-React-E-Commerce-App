@@ -11,10 +11,20 @@ function Products() {
   const [error, setError] = useState(null)
 
   useEffect(() => {
+    console.log('📦 Products page: Starting to fetch products...')
     getAllProducts()
-      .then(data => setProducts(data))
-      .catch(() => setError('Failed to load products'))
-      .finally(() => setLoading(false))
+      .then(data => {
+        console.log('📦 Products page: Received', data.length, 'products')
+        setProducts(data)
+      })
+      .catch((err) => {
+        console.error('📦 Products page: Error:', err)
+        setError('Failed to load products: ' + err.message)
+      })
+      .finally(() => {
+        console.log('📦 Products page: Setting loading=false')
+        setLoading(false)
+      })
   }, [])
 
   if (loading) return <LoadingSpinner />

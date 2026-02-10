@@ -22,11 +22,20 @@ const normalizeProduct = (product) => ({
 })
 
 export const getAllProducts = async () => {
-  const snapshot = await getDocs(productsRef)
-  return snapshot.docs.map((docSnap) => ({
-    id: docSnap.id,
-    ...docSnap.data()
-  }))
+  console.log('🔍 Fetching products from Firestore...')
+  try {
+    const snapshot = await getDocs(productsRef)
+    console.log('✅ Products fetched:', snapshot.size)
+    const products = snapshot.docs.map((docSnap) => ({
+      id: docSnap.id,
+      ...docSnap.data()
+    }))
+    console.log('✅ Products mapped:', products.length)
+    return products
+  } catch (error) {
+    console.error('❌ Error fetching products:', error.code, error.message)
+    throw error
+  }
 }
 
 export const getProductById = async (id) => {
