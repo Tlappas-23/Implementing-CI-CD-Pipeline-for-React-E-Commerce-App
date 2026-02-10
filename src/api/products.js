@@ -21,21 +21,14 @@ const normalizeProduct = (product) => ({
   image: (product.image || '').trim()
 })
 
+// Fetch all products from Firestore database
 export const getAllProducts = async () => {
-  console.log('🔍 Fetching products from Firestore...')
-  try {
-    const snapshot = await getDocs(productsRef)
-    console.log('✅ Products fetched:', snapshot.size)
-    const products = snapshot.docs.map((docSnap) => ({
-      id: docSnap.id,
-      ...docSnap.data()
-    }))
-    console.log('✅ Products mapped:', products.length)
-    return products
-  } catch (error) {
-    console.error('❌ Error fetching products:', error.code, error.message)
-    throw error
-  }
+  const snapshot = await getDocs(productsRef)
+  // Convert Firestore documents to JavaScript objects
+  return snapshot.docs.map((docSnap) => ({
+    id: docSnap.id,
+    ...docSnap.data()
+  }))
 }
 
 export const getProductById = async (id) => {
@@ -44,11 +37,12 @@ export const getProductById = async (id) => {
   return { id: snap.id, ...snap.data() }
 }
 
+// Create a new product in Firestore
 export const createProduct = async (product) => {
   const payload = normalizeProduct(product)
   const docRef = await addDoc(productsRef, {
     ...payload,
-    createdAt: serverTimestamp(),
+    createdAt: serverTimestamp(), // Automatically set creation timestamp
     updatedAt: serverTimestamp()
   })
   return docRef.id

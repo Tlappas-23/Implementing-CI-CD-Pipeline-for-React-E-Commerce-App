@@ -15,10 +15,8 @@ import Orders from './pages/Orders'
 import OrderDetails from './pages/OrderDetails'
 import ProtectedRoute from './components/ProtectedRoute'
 
-/**
- * App
- * Central layout + routing
- */
+// Main App Component
+// Handles routing between different pages using React Router
 function App() {
   return (
     <Router>
